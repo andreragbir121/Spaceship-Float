@@ -5,10 +5,8 @@ using UnityEngine;
 public class AstroidSpawner : MonoBehaviour
 {
     public float speed; //float variable to store the speed for the cube to be moving at
-    public Vector3 position = new Vector3(-107.4f, 0f, 15f);
+    private Vector3 position = new Vector3(800, 0, 15);
     
-
-
     // The scale of the cube
     public Vector3 cubeScale = new Vector3(800, 800, 0);
 
@@ -38,7 +36,6 @@ public class AstroidSpawner : MonoBehaviour
         
     
       // Move the cube along the x axis
-
         transform.position += Vector3.right * speed * Time.deltaTime;
 
         // Spawn asteroids randomly on the cube

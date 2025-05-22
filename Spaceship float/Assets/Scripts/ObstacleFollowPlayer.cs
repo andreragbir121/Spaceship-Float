@@ -24,6 +24,6 @@ public class ObstacleFollowPlayer : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.Translate(Vector3.forward * forwardSpeed * Time.deltaTime);
+        transform.Translate(Vector3.right * forwardSpeed * Time.deltaTime);
     }
 }
