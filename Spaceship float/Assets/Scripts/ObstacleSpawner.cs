@@ -5,7 +5,7 @@ using UnityEngine;
 public class AstroidSpawner : MonoBehaviour
 {
     public float speed; //float variable to store the speed for the cube to be moving at
-    private Vector3 position = new Vector3(800, 0, 15);
+    private Vector3 position = new Vector3(800, 100, 15);
     
     // The scale of the cube
     public Vector3 cubeScale = new Vector3(800, 800, 0);
