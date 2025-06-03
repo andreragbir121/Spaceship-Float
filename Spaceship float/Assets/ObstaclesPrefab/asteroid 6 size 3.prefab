@@ -13,6 +13,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: asteroid 6 size 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1340289439832812958, guid: f95fc67bf2d2fa44fb14d28b86502f7a,
+        type: 3}
+      propertyPath: m_TagString
+      value: Asteroid
+      objectReference: {fileID: 0}
     - target: {fileID: 1383269221220694057, guid: f95fc67bf2d2fa44fb14d28b86502f7a,
         type: 3}
       propertyPath: m_LocalScale.x

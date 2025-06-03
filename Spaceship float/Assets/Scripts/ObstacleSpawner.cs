@@ -1,66 +1,76 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class AstroidSpawner : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public float speed; //float variable to store the speed for the cube to be moving at
-    private Vector3 position = new Vector3(800, 100, 15);
-    
-    // The scale of the cube
-    public Vector3 cubeScale = new Vector3(800, 800, 0);
+    public static GameManager Instance { get; private set; }
 
-    // The array of asteroids to spawn
-    public GameObject[] asteroids;
+    public GameObject[] asteroidPrefabs;
+    public float spawnRate = 1f;
+    public float spawnDistance = 50f; // Distance AHEAD on X-axis
+    public float spawnWidth = 30f;    // Vertical (Y-axis) spread
+    public float spawnHeight = 30f;   // Depth (Z-axis) spread
+    public float destroyDistance = 30f; // Behind player
 
-    // The number of asteroids to spawn per frame
-    public float spawnRate = 1;
+    private Transform player;
+    private float nextSpawnTime;
 
-    // The minimum and maximum distance from the cube center to spawn asteroids
-    public float minSpawnDistance = 400f;
-    public float maxSpawnDistance = 800f;
-
-    // The initial position of the cube
-
-    // Start is called before the first frame update
-    void Start()
-    {   
- // Set the position and scale of the cube
-        transform.position = position;
-        transform.localScale = cubeScale;
+    void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
-    
-    // Update is called once per frame
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
     void Update()
     {
-        
-    
-      // Move the cube along the x axis
-        transform.position += Vector3.right * speed * Time.deltaTime;
-
-        // Spawn asteroids randomly on the cube
-        for (int i = 0; i < spawnRate; i++)
+        if (Time.time >= nextSpawnTime)
         {
-            // Pick a random asteroid from the array
-            int index = Random.Range(0, asteroids.Length);
-            GameObject asteroid = asteroids[index];
-
-            // Pick a random position on the cube surface
-            Vector3 position = Random.onUnitSphere * Random.Range(minSpawnDistance, maxSpawnDistance);
-            position += transform.position;
-
-            // Instantiate the asteroid at the position
-            Instantiate(asteroid, position, Quaternion.identity);
-    }
+            SpawnAsteroid();
+            nextSpawnTime = Time.time + 1f/spawnRate;
+        }
+        DestroyOffscreenAsteroids();
     }
 
+    void SpawnAsteroid()
+    {
+        // Spawn in front (X+), with vertical (Y) and depth (Z) randomness
+        Vector3 spawnPos = player.position + 
+                         new Vector3(
+                             spawnDistance, // Always ahead on X
+                             Random.Range(-spawnWidth, spawnWidth),
+                             Random.Range(-spawnHeight, spawnHeight));
 
-
-    void FixedUpdate(){
-        //making the spawner move forward at the same same that the player object will move
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        Instantiate(
+            asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)],
+            spawnPos,
+            Quaternion.identity
+        );
     }
 
+    void DestroyOffscreenAsteroids()
+    {
+        foreach (GameObject asteroid in GameObject.FindGameObjectsWithTag("Asteroid"))
+        {
+            // Destroy if too far behind on X-axis
+            if (asteroid.transform.position.x < player.position.x - destroyDistance)
+            {
+                Destroy(asteroid);
+            }
+        }
+    }
 
+    // Visualize spawn area in Scene view
+    void OnDrawGizmosSelected()
+    {
+        if (player == null) return;
+        
+        Gizmos.color = Color.green;
+        Vector3 center = player.position + Vector3.right * spawnDistance;
+        Vector3 size = new Vector3(5f, spawnWidth*2, spawnHeight*2);
+        Gizmos.DrawWireCube(center, size);
+    }
 }
-
