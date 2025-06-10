@@ -2,75 +2,89 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
-
+    // Asteroid prefabs to spawn (set these in Unity Inspector)
     public GameObject[] asteroidPrefabs;
-    public float spawnRate = 1f;
-    public float spawnDistance = 50f; // Distance AHEAD on X-axis
-    public float spawnWidth = 30f;    // Vertical (Y-axis) spread
-    public float spawnHeight = 30f;   // Depth (Z-axis) spread
-    public float destroyDistance = 30f; // Behind player
+    
+    // How many asteroids spawn per second
+    public float spawnRate = 1.5f;
+    
+    // How far ahead of player to spawn (X-axis)
+    public float spawnDistance = 50f;
+    
+    // Vertical spread range (Y-axis)
+    public float spawnWidth = 30f;
+    
+    // Depth spread range (Z-axis)
+    public float spawnHeight = 30f;
+    
+    // How far behind player before destroying asteroids
+    public float destroyDistance = 30f;
 
+    // Reference to player's position
     private Transform player;
+    
+    // Timer for next spawn
     private float nextSpawnTime;
 
-    void Awake()
-    {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-    }
-
+    // Called when game starts
     void Start()
     {
+        // Find player object by its "Player" tag and get its Transform
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
+    // Called every frame
     void Update()
     {
+        // Check if it's time to spawn new asteroid
         if (Time.time >= nextSpawnTime)
         {
             SpawnAsteroid();
-            nextSpawnTime = Time.time + 1f/spawnRate;
+            // Set next spawn time based on spawnRate
+            nextSpawnTime = Time.time + 1f / spawnRate;
         }
+        // Clean up old asteroids
         DestroyOffscreenAsteroids();
     }
 
+    // Creates a new asteroid
     void SpawnAsteroid()
     {
-        // Spawn in front (X+), with vertical (Y) and depth (Z) randomness
-        Vector3 spawnPos = player.position + 
+        // Calculate spawn position:
+        // - Always spawnDistance units ahead on X
+        // - Random Y position within spawnWidth range
+        // - Random Z position within spawnHeight range
+        Vector3 spawnPos = player.position +
                          new Vector3(
-                             spawnDistance, // Always ahead on X
+                             spawnDistance,
                              Random.Range(-spawnWidth, spawnWidth),
                              Random.Range(-spawnHeight, spawnHeight));
 
+        // Create new asteroid:
+        // 1. Pick random prefab from array
+        // 2. Set position
+        // 3. No rotation (Quaternion.identity)
         Instantiate(
-            asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)],
-            spawnPos,
+            asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)], 
+            spawnPos, 
             Quaternion.identity
         );
     }
 
+    // Removes asteroids that are behind the player
     void DestroyOffscreenAsteroids()
     {
-        foreach (GameObject asteroid in GameObject.FindGameObjectsWithTag("Asteroid"))
+        // Get all objects tagged "Asteroid"
+        GameObject[] allAsteroids = GameObject.FindGameObjectsWithTag("Asteroid");
+        
+        foreach (GameObject asteroid in allAsteroids)
         {
-            // Destroy if too far behind on X-axis
+            // If asteroid is destroyDistance units behind player on X-axis
             if (asteroid.transform.position.x < player.position.x - destroyDistance)
             {
+                // Remove it from the game
                 Destroy(asteroid);
             }
         }
-    }
-
-    // Visualize spawn area in Scene view
-    void OnDrawGizmosSelected()
-    {
-        if (player == null) return;
-        
-        Gizmos.color = Color.green;
-        Vector3 center = player.position + Vector3.right * spawnDistance;
-        Vector3 size = new Vector3(5f, spawnWidth*2, spawnHeight*2);
-        Gizmos.DrawWireCube(center, size);
     }
 }
