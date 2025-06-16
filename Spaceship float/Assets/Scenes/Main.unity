@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0, g: 0.3333335, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.5607712, g: 1, b: 0, a: 1}
   m_AmbientGroundColor: {r: 0, g: 0.0042738914, b: 1, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 4.01
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: a8cf135b5fb9eac4dafc9081f44f019a, type: 2}
@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 170076734}
+  m_Sun: {fileID: 0}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -66,7 +66,7 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_ReflectionCompression: 0
+    m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
     m_PVRSampling: 1
@@ -163,8 +163,8 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 1
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -346,7 +346,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 2.735e-42, y: 2.524355e-29, z: 0, w: 3.9415303e+12}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -536,11 +536,13 @@ MonoBehaviour:
   - {fileID: 4399734594141950724, guid: 28d68e5e92c56df4b8503595979ba85e, type: 3}
   - {fileID: 8707745041029703435, guid: 95f840f866076df438be83dfe4f557c7, type: 3}
   - {fileID: 7915331488039372529, guid: 24a21daa00cc06747ae16e2ac1e9ba13, type: 3}
-  spawnRate: 1
+  spawnRate: 1.5
   spawnDistance: 300
   spawnWidth: 30
   spawnHeight: 20
   destroyDistance: 0.5
+  minAsteroidSize: 0.5
+  maxAsteroidSize: 3
 --- !u!1 &1106427879 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6418047201664890675, guid: f669216fa5b526b489550fa36eeaae86,
@@ -560,6 +562,12 @@ PrefabInstance:
       propertyPath: maxTiltAngle
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 1708272972733313766, guid: f669216fa5b526b489550fa36eeaae86,
+        type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 7856939199014537196, guid: 212ef1a41838ce044a9ac54994866708,
+        type: 3}
     - target: {fileID: 5934243752198319497, guid: f669216fa5b526b489550fa36eeaae86,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -647,7 +655,7 @@ LightingSettings:
   m_BakeResolution: 40
   m_Padding: 2
   m_LightmapCompression: 3
-  m_AO: 0
+  m_AO: 1
   m_AOMaxDistance: 1
   m_CompAOExponent: 1
   m_CompAOExponentDirect: 0

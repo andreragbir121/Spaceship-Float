@@ -12,10 +12,10 @@ public class GameManager : MonoBehaviour
     public float spawnDistance = 50f;
     
     // Vertical spread range (Y-axis)
-    public float spawnWidth = 30f;
+    public float spawnWidth = 60f;
     
     // Depth spread range (Z-axis)
-    public float spawnHeight = 30f;
+    public float spawnHeight = 60f;
     
     // How far behind player before destroying asteroids
     public float destroyDistance = 30f;
@@ -25,6 +25,9 @@ public class GameManager : MonoBehaviour
     
     // Timer for next spawn
     private float nextSpawnTime;
+
+    public float minAsteroidSize = 1f;
+    public float maxAsteroidSize = 20f;
 
     // Called when game starts
     void Start()
@@ -60,15 +63,21 @@ public class GameManager : MonoBehaviour
                              Random.Range(-spawnWidth, spawnWidth),
                              Random.Range(-spawnHeight, spawnHeight));
 
+
         // Create new asteroid:
         // 1. Pick random prefab from array
         // 2. Set position
         // 3. No rotation (Quaternion.identity)
-        Instantiate(
-            asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)], 
-            spawnPos, 
-            Quaternion.identity
-        );
+        GameObject newAsteroid = Instantiate(
+           asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)],
+           spawnPos,
+           Quaternion.identity
+       );
+
+        // Apply random uniform scale
+        float randomScale = Random.Range(minAsteroidSize, maxAsteroidSize);
+        newAsteroid.transform.localScale = Vector3.one * randomScale;
+        
     }
 
     // Removes asteroids that are behind the player

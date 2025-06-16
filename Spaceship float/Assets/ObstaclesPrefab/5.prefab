@@ -76,13 +76,18 @@ PrefabInstance:
     - target: {fileID: 1766908215332405102, guid: d148a3a36950e3a448f6037f0b1a53d9,
         type: 3}
       propertyPath: m_Name
-      value: asteroid 5 size 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1766908215332405102, guid: d148a3a36950e3a448f6037f0b1a53d9,
         type: 3}
       propertyPath: m_TagString
       value: Asteroid
       objectReference: {fileID: 0}
+    - target: {fileID: 8619052114973861696, guid: d148a3a36950e3a448f6037f0b1a53d9,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f90571e4f58f53544a208eb65fd2750e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -119,6 +124,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forwardSpeed: -32
+  minRotationSpeed: 20
+  maxRotationSpeed: 100
 --- !u!135 &5933454425091136966
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -134,7 +141,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

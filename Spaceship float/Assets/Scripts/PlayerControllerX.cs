@@ -8,7 +8,7 @@ public class PlayerControllerX : MonoBehaviour
     public float rotationSpeed = 5f; // Speed of tilting
     public float maxTiltAngle = 45f; // Maximum tilt angle in degrees
     private bool isHolding = false; // Check if the button is being held
-
+    public GameObject explosionEffect;
     void FixedUpdate()
     {
         // Move the plane forward at a constant rate
@@ -51,5 +51,17 @@ public class PlayerControllerX : MonoBehaviour
 
         // Apply the new rotation while keeping the Y and Z rotations unchanged
         transform.rotation = Quaternion.Euler(targetRotationX, currentRotation.y, currentRotation.z);
+    }
+
+ void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Asteroid"))
+        {
+            if (explosionEffect != null) 
+                Instantiate(explosionEffect, transform.position, Quaternion.identity);
+            
+            Destroy(gameObject);
+            Debug.Log("Player destroyed!");
+        }
     }
 }

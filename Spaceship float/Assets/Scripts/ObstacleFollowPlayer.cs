@@ -9,11 +9,18 @@ using UnityEngine;
 public class ObstacleFollowPlayer : MonoBehaviour
 {
     public float forwardSpeed;
+    public float minRotationSpeed = 20f;  // Minimum rotation speed (degrees/sec)
+    public float maxRotationSpeed = 100f; // Maximum rotation speed (degrees/sec)
+    
+    private Vector3 rotationAxis;        // Random rotation axis
+    private float rotationSpeed;         // Random speed
     // Start is called before the first frame update
     void Start()
     {
-        
-        
+      // Set random rotation axis and speed
+        rotationAxis = Random.onUnitSphere; // Random 3D direction
+        rotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
+
     }
 
     // Update is called once per frame
@@ -25,5 +32,8 @@ public class ObstacleFollowPlayer : MonoBehaviour
     void FixedUpdate()
     {
         transform.Translate(Vector3.right * forwardSpeed * Time.deltaTime);
+        transform.Rotate(rotationAxis * rotationSpeed * Time.deltaTime);
+
     }
+    
 }

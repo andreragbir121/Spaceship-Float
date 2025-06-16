@@ -76,7 +76,7 @@ PrefabInstance:
     - target: {fileID: 7609285683848877748, guid: 9cec4abc2ee07fe42bbfd33112730803,
         type: 3}
       propertyPath: m_Name
-      value: asteroid 2 size 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7609285683848877748, guid: 9cec4abc2ee07fe42bbfd33112730803,
         type: 3}
@@ -119,6 +119,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forwardSpeed: -14
+  minRotationSpeed: 20
+  maxRotationSpeed: 100
 --- !u!135 &3714466723536946785
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -134,7 +136,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
