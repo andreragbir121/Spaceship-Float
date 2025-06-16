@@ -472,6 +472,7 @@ GameObject:
   - component: {fileID: 785179997}
   - component: {fileID: 785179996}
   - component: {fileID: 785179998}
+  - component: {fileID: 785179999}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -543,6 +544,29 @@ MonoBehaviour:
   destroyDistance: 0.5
   minAsteroidSize: 0.5
   maxAsteroidSize: 3
+--- !u!114 &785179999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785179995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b19acdf57630ee6408e2d74676547c4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinPrefab:
+  - {fileID: 3546978546806626714, guid: 051b460bb70b0664c8314a52b7383bf6, type: 3}
+  - {fileID: 1948081391603362309, guid: e549b6b0020b7f84e994b5a50a880e92, type: 3}
+  - {fileID: 9079098076894399488, guid: 9cefee1dec88e434d85c7f724940260a, type: 3}
+  spawnRate: 3
+  spawnDistance: 40
+  spawnWidth: 30
+  spawnHeight: 60
+  destroyDistance: 30
+  minAsteroidSize: 1
+  maxAsteroidSize: 20
 --- !u!1 &1106427879 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6418047201664890675, guid: f669216fa5b526b489550fa36eeaae86,
