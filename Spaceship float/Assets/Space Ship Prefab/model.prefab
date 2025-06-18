@@ -601,6 +601,7 @@ MonoBehaviour:
   speed: 50
   rotationSpeed: 50
   maxTiltAngle: 30
+  explosionEffect: {fileID: 0}
 --- !u!65 &8866558953706171826
 BoxCollider:
   m_ObjectHideFlags: 0

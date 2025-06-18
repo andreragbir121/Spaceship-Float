@@ -6,16 +6,16 @@ public class MainMenu : MonoBehaviour
 {
    
  public void PlayGame(){                        //function for starting game
-        SceneManager.LoadSceneAsync(1);         //usees the scene manager to load selected scene based on scene ranking in project settings
+        SceneManager.LoadSceneAsync(3);         //usees the scene manager to load selected scene based on scene ranking in project settings
     }
 
 public void MapSelect(){                        //function for map selecting menu
-        SceneManager.LoadSceneAsync(2);          //usees the scene manager to load selected scene based on scene ranking in project settings
+        SceneManager.LoadSceneAsync(1);          //usees the scene manager to load selected scene based on scene ranking in project settings
     }
 
 
 public void ShipSelect(){                        //function for ships menu
-        SceneManager.LoadSceneAsync(3);          //usees the scene manager to load selected scene based on scene ranking in project settings
+        SceneManager.LoadSceneAsync(2);          //usees the scene manager to load selected scene based on scene ranking in project settings
     }
 
 public void Exit() {                             //function for exit

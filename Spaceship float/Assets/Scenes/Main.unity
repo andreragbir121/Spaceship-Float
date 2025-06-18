@@ -492,7 +492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb66fd1e734d204796bc3c0b9c6201a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.35
+  speed: 1.5
 --- !u!4 &785179997
 Transform:
   m_ObjectHideFlags: 0
@@ -558,15 +558,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinPrefab:
   - {fileID: 3546978546806626714, guid: 051b460bb70b0664c8314a52b7383bf6, type: 3}
+  - {fileID: 5622795889921950975, guid: 42e283dd586f8a542ada8e5ecac6e8cb, type: 3}
   - {fileID: 1948081391603362309, guid: e549b6b0020b7f84e994b5a50a880e92, type: 3}
   - {fileID: 9079098076894399488, guid: 9cefee1dec88e434d85c7f724940260a, type: 3}
-  spawnRate: 3
-  spawnDistance: 40
+  spawnRate: 2
+  spawnDistance: 60
   spawnWidth: 30
-  spawnHeight: 60
-  destroyDistance: 30
-  minAsteroidSize: 1
-  maxAsteroidSize: 20
+  spawnHeight: 30
+  destroyDistance: 0.5
 --- !u!1 &1106427879 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6418047201664890675, guid: f669216fa5b526b489550fa36eeaae86,
