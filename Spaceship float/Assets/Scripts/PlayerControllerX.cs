@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using MatthewAssets;
 public class PlayerControllerX : MonoBehaviour
 {
     public float speed = 10f; // Forward movement speed
@@ -9,6 +9,8 @@ public class PlayerControllerX : MonoBehaviour
     public float maxTiltAngle = 45f; // Maximum tilt angle in degrees
     private bool isHolding = false; // Check if the button is being held
     public GameObject explosionEffect;
+    public ParticleSystem engineFlame;  //Flame to come out at the rear of the space ship
+
     void FixedUpdate()
     {
         // Move the plane forward at a constant rate
@@ -17,6 +19,8 @@ public class PlayerControllerX : MonoBehaviour
 
     void Update()
     {
+
+
         // Check for mouse button or touch input
         if (Input.GetMouseButtonDown(0)) // 0 is the left mouse button or a single touch
         {
