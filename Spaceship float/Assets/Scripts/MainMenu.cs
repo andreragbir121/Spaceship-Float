@@ -27,9 +27,8 @@ public class MainMenu : MonoBehaviour
     // ====== MAP SELECTION ======
     public void SelectMap(int mapIndex)
     {
-        selectedMapIndex = mapIndex;
         PlayerPrefs.SetInt("SelectedMap", mapIndex);
-        ShowShipSelection(); // Progress to ship select
+        StartGame();
     }
 
     // ====== SHIP SELECTION ======
@@ -63,8 +62,8 @@ public class MainMenu : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-        #endif
+#endif
     }
 }

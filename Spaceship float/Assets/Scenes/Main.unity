@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 4.01
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: fb2d483df36b45846ab4fb88f2e77672, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: fa5c7966e88119347a016ba9ed292636, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -746,9 +746,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 785179997}
-  - component: {fileID: 785179996}
   - component: {fileID: 785179998}
   - component: {fileID: 785179999}
+  - component: {fileID: 785180000}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -756,19 +756,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &785179996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 785179995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eb66fd1e734d204796bc3c0b9c6201a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 1.5
 --- !u!4 &785179997
 Transform:
   m_ObjectHideFlags: 0
@@ -842,6 +829,31 @@ MonoBehaviour:
   spawnWidth: 30
   spawnHeight: 30
   destroyDistance: 0.5
+--- !u!114 &785180000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785179995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f689f0532b4984247ab4d1b2b21b38c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maps:
+  - name: Map 1
+    skyboxMaterial: {fileID: 2100000, guid: 4e8ca601327d3584280c02c6560d1de4, type: 2}
+    rotationSpeed: 2.5
+  - name: Map 2
+    skyboxMaterial: {fileID: 2100000, guid: fa5c7966e88119347a016ba9ed292636, type: 2}
+    rotationSpeed: 2.5
+  - name: Map 3
+    skyboxMaterial: {fileID: 2100000, guid: a8cf135b5fb9eac4dafc9081f44f019a, type: 2}
+    rotationSpeed: 2.5
+  - name: Map 4
+    skyboxMaterial: {fileID: 2100000, guid: 60c6f5aae0c08b94799978d6780db592, type: 2}
+    rotationSpeed: 2.5
 --- !u!1 &1018365712
 GameObject:
   m_ObjectHideFlags: 0
