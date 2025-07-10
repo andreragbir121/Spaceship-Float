@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 4.01
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: fa5c7966e88119347a016ba9ed292636, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 5f32c9f05778f6643b99341464cc885a, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -749,6 +749,7 @@ GameObject:
   - component: {fileID: 785179998}
   - component: {fileID: 785179999}
   - component: {fileID: 785180000}
+  - component: {fileID: 785180001}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -799,7 +800,7 @@ MonoBehaviour:
   - {fileID: 3039970211051220692, guid: 9c0890481b6f0c34bbbea1259304d325, type: 3}
   - {fileID: 4399734594141950724, guid: 28d68e5e92c56df4b8503595979ba85e, type: 3}
   - {fileID: 8707745041029703435, guid: 95f840f866076df438be83dfe4f557c7, type: 3}
-  - {fileID: 7915331488039372529, guid: 24a21daa00cc06747ae16e2ac1e9ba13, type: 3}
+  - {fileID: 3039970211051220692, guid: 9c0890481b6f0c34bbbea1259304d325, type: 3}
   spawnRate: 1.5
   spawnDistance: 300
   spawnWidth: 30
@@ -824,7 +825,7 @@ MonoBehaviour:
   - {fileID: 5622795889921950975, guid: 42e283dd586f8a542ada8e5ecac6e8cb, type: 3}
   - {fileID: 1948081391603362309, guid: e549b6b0020b7f84e994b5a50a880e92, type: 3}
   - {fileID: 9079098076894399488, guid: 9cefee1dec88e434d85c7f724940260a, type: 3}
-  spawnRate: 2
+  spawnRate: 5
   spawnDistance: 60
   spawnWidth: 30
   spawnHeight: 30
@@ -846,14 +847,27 @@ MonoBehaviour:
     skyboxMaterial: {fileID: 2100000, guid: 4e8ca601327d3584280c02c6560d1de4, type: 2}
     rotationSpeed: 2.5
   - name: Map 2
-    skyboxMaterial: {fileID: 2100000, guid: fa5c7966e88119347a016ba9ed292636, type: 2}
+    skyboxMaterial: {fileID: 2100000, guid: a8cf135b5fb9eac4dafc9081f44f019a, type: 2}
     rotationSpeed: 2.5
   - name: Map 3
-    skyboxMaterial: {fileID: 2100000, guid: a8cf135b5fb9eac4dafc9081f44f019a, type: 2}
+    skyboxMaterial: {fileID: 2100000, guid: 5f32c9f05778f6643b99341464cc885a, type: 2}
     rotationSpeed: 2.5
   - name: Map 4
     skyboxMaterial: {fileID: 2100000, guid: 60c6f5aae0c08b94799978d6780db592, type: 2}
     rotationSpeed: 2.5
+--- !u!114 &785180001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785179995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dce7ff7bb8e2ad4f814c54282e30a35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentCoins: 0
 --- !u!1 &1018365712
 GameObject:
   m_ObjectHideFlags: 0

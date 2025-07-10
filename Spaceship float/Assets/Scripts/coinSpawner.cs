@@ -26,6 +26,7 @@ public class coinSpawner : MonoBehaviour
     
     // Timer for next spawn
     private float nextSpawnTime;
+    
 
     // Called when game starts
     void Start()
