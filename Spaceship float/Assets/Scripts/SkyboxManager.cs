@@ -26,8 +26,11 @@ public class SkyboxManager : MonoBehaviour
     }
 
     void ApplySkybox(int mapIndex)
-    {
-        if (mapIndex >= maps.Length) return;
-        RenderSettings.skybox = maps[mapIndex].skyboxMaterial;
-    }
+{
+    if (mapIndex >= maps.Length) return;
+
+    RenderSettings.skybox = maps[mapIndex].skyboxMaterial;
+    DynamicGI.UpdateEnvironment(); // Refreshes lighting/reflection data to match skybox
+}
+
 }
