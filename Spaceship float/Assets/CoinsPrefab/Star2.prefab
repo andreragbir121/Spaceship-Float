@@ -124,6 +124,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   value: 1
   moveSpeed: 5
+  explosionEffect: {fileID: 7856939199014537196, guid: 212ef1a41838ce044a9ac54994866708,
+    type: 3}
 --- !u!54 &699895781958161791
 Rigidbody:
   m_ObjectHideFlags: 0

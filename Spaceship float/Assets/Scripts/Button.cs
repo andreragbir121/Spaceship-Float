@@ -3,67 +3,58 @@ using UnityEngine.UI;
 
 public class LockButtonController : MonoBehaviour
 {
-    [Header("Sprites")]
+    [Header("Visuals")]
     [SerializeField] private Sprite lockedSprite;
     [SerializeField] private Sprite unlockedSprite;
+    [SerializeField] private Image buttonImage;
 
-    [Header("Currency Settings")]
-    [SerializeField] private int unlockCost = 0;
+    [Header("Pricing")]
+    [SerializeField] private int unlockCost = 20; // Set to 20 coins as required
 
     private bool isLocked = true;
-    private bool isUnlocked = false;
-    private Image buttonImage;
 
     private void Awake()
     {
-        buttonImage = GetComponent<Image>();
-        UpdateIcon();
+        // Auto-get reference if not set in Inspector
+        if (buttonImage == null) buttonImage = GetComponent<Image>();
+        UpdateVisuals();
     }
 
-    public void OnLockButtonClick()
+    public void TryUnlock()
     {
-        if (isLocked)
-        {
-            if (CanAffordUnlock())
-            {
-                Unlock();
-            }
-            else
-            {
-                Debug.Log("Not enough currency!");
-            }
-        }
-        else if (isUnlocked)
+        if (!isLocked) 
         {
             StartGame();
+            return;
         }
-    }
 
-    private bool CanAffordUnlock()
-    {
-        // 🧪 Always returns true for testing
-        return true;
+        if (CurrencyManager.Instance.CurrentCoins >= unlockCost)
+        {
+            Unlock();
+        }
+        else
+        {
+            Debug.Log($"Need {unlockCost} coins to unlock!");
+            // Add visual/audio feedback here
+        }
     }
 
     private void Unlock()
     {
         isLocked = false;
-        isUnlocked = true;
-        UpdateIcon();
-
-        // Future currency deduction
-        // CurrencyManager.Instance.SpendCurrency(unlockCost);
-    }
-
-    private void UpdateIcon()
-    {
-        buttonImage.sprite = isLocked ? lockedSprite : unlockedSprite;
+        CurrencyManager.Instance.SpendCoins(unlockCost);
+        UpdateVisuals();
     }
 
     private void StartGame()
     {
-        isUnlocked = false;
-        Debug.Log("Game Started!");
-        // TODO: Replace with your actual start logic (load scene, enable gameplay, etc.)
+        Debug.Log("Loading map...");
+        // SceneManager.LoadScene("MapName"); // Uncomment when ready
+    }
+
+    private void UpdateVisuals()
+    {
+        buttonImage.sprite = isLocked ? lockedSprite : unlockedSprite;
+        // Optional: Change button color/interactable state
     }
 }
