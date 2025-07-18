@@ -23,12 +23,10 @@ public class DestroyObstacles : MonoBehaviour
     void Update()
     {
         transform.position += Vector3.right * speed * Time.deltaTime;
-
     }
 
     void FixedUpdate(){
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
-
     }
 
     void OnCollisionEnter(Collision collision){

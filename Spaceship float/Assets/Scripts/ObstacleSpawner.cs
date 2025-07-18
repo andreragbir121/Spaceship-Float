@@ -2,96 +2,106 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Asteroid prefabs to spawn (set these in Unity Inspector)
+    // Array of asteroid prefabs to randomly choose from
     public GameObject[] asteroidPrefabs;
     
-    // How many asteroids spawn per second
+    // How frequently asteroids spawn (per second)
     public float spawnRate = 1.5f;
-    
-    // How far ahead of player to spawn (X-axis)
+
+    // Distance in front of player to spawn asteroids
     public float spawnDistance = 50f;
     
-    // Vertical spread range (Y-axis)
+    // Vertical spawn area range
     public float spawnWidth = 60f;
     
-    // Depth spread range (Z-axis)
+    // Depth spawn area range
     public float spawnHeight = 60f;
     
-    // How far behind player before destroying asteroids
+    // Distance behind player where asteroids get destroyed
     public float destroyDistance = 30f;
 
-    // Reference to player's position
-    private Transform player;
-    
-    // Timer for next spawn
-    private float nextSpawnTime;
-
+    // Minimum and maximum size for spawned asteroids
     public float minAsteroidSize = 1f;
     public float maxAsteroidSize = 20f;
 
-    // Called when game starts
+    // Reference to player's transform
+    private Transform player;
+    
+    // Timer tracking next spawn time
+    private float nextSpawnTime;
+    
+    // Flag to control spawning
+    private bool canSpawn = true;
+
     void Start()
     {
-        // Find player object by its "Player" tag and get its Transform
+        // Get player reference at start
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    // Called every frame
     void Update()
     {
-        // Check if it's time to spawn new asteroid
+        // Skip if spawning disabled or player missing
+        if (!canSpawn || player == null) return;
+        
+        // Check if time to spawn new asteroid
         if (Time.time >= nextSpawnTime)
         {
             SpawnAsteroid();
-            // Set next spawn time based on spawnRate
+            // Calculate next spawn time
             nextSpawnTime = Time.time + 1f / spawnRate;
         }
-        // Clean up old asteroids
+        
+        // Remove asteroids behind player
         DestroyOffscreenAsteroids();
     }
 
-    // Creates a new asteroid
+    // Disable further spawning
+    public void StopGame() => canSpawn = false;
+
+    void OnEnable()
+    {
+        // Reset spawn timer
+        nextSpawnTime = 0f;
+        // Re-enable spawning
+        canSpawn = true;
+
+        // Refresh player reference
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        if (player == null) Debug.LogError("Player not found in scene!");
+    }
+
     void SpawnAsteroid()
     {
-        // Calculate spawn position:
-        // - Always spawnDistance units ahead on X
-        // - Random Y position within spawnWidth range
-        // - Random Z position within spawnHeight range
+        // Calculate random spawn position in front of player
         Vector3 spawnPos = player.position +
                          new Vector3(
                              spawnDistance,
                              Random.Range(-spawnWidth, spawnWidth),
                              Random.Range(-spawnHeight, spawnHeight));
 
-
-        // Create new asteroid:
-        // 1. Pick random prefab from array
-        // 2. Set position
-        // 3. No rotation (Quaternion.identity)
+        // Create asteroid from random prefab
         GameObject newAsteroid = Instantiate(
            asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)],
            spawnPos,
            Quaternion.identity
        );
 
-        // Apply random uniform scale
+        // Set random size
         float randomScale = Random.Range(minAsteroidSize, maxAsteroidSize);
         newAsteroid.transform.localScale = Vector3.one * randomScale;
-        
     }
 
-    // Removes asteroids that are behind the player
     void DestroyOffscreenAsteroids()
     {
-        // Get all objects tagged "Asteroid"
+        // Get all active asteroids
         GameObject[] allAsteroids = GameObject.FindGameObjectsWithTag("Asteroid");
         
         foreach (GameObject asteroid in allAsteroids)
         {
-            // If asteroid is destroyDistance units behind player on X-axis
+            // Destroy if too far behind player
             if (asteroid.transform.position.x < player.position.x - destroyDistance)
             {
-                // Remove it from the game
                 Destroy(asteroid);
             }
         }

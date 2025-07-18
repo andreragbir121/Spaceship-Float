@@ -1,61 +1,70 @@
 using UnityEngine;
 using UnityEngine.UI;
+
 public class scoreUI : MonoBehaviour
 {
     [SerializeField] private Text _currentCoinsText;
+    
     [SerializeField] private Text _totalCoinsText;
 
-    [Header("Data")]
+
     [SerializeField] private int _totalCoinsEverCollected = 0;
-    private int _currentSessionCoins = 0;
+
+    private int _currentSessionCoins = 0; // Coins collected in current play session
 
     void Start()
     {
-        // Initialize UI
+        // Initialize UI displays
         UpdateCurrentCoinsDisplay(0);
         UpdateTotalCoinsDisplay();
-
-        // Subscribe to events
+        
+        // Subscribe to currency updates
         CurrencyManager.OnCoinsUpdated += HandleCoinChange;
     }
 
     void OnDestroy()
     {
-        // Always unsubscribe to prevent memory leaks
+        // Unsubscribe to prevent memory leaks
         CurrencyManager.OnCoinsUpdated -= HandleCoinChange;
     }
 
+    /// Handles changes to the player's coin count
+  
     private void HandleCoinChange(int newAmount)
     {
+        // Calculate difference from previous amount
         int delta = newAmount - _currentSessionCoins;
         _currentSessionCoins = newAmount;
         _totalCoinsEverCollected += delta;
 
+        // Update both displays
         UpdateCurrentCoinsDisplay(newAmount);
         UpdateTotalCoinsDisplay();
     }
 
-    // Current run coins (resets between sessions)
+    // Updates current session coin display
     private void UpdateCurrentCoinsDisplay(int amount)
     {
         if (_currentCoinsText != null)
             _currentCoinsText.text = $"Coins: {amount}";
     }
 
-    // Lifetime coins (persists between sessions)
+    // Updates lifetime total coin display
     private void UpdateTotalCoinsDisplay()
     {
         if (_totalCoinsText != null)
             _totalCoinsText.text = $"Total: {_totalCoinsEverCollected}";
     }
 
-    // Call this when saving game data
+    /// Saves total coins to persistent storage
     public void SaveTotalCoins()
     {
         PlayerPrefs.SetInt("TotalCoins", _totalCoinsEverCollected);
+        PlayerPrefs.Save(); // Explicit save for safety
     }
 
-    // Call this when loading game data
+    // Loads total coins from persistent storage
+   
     public void LoadTotalCoins()
     {
         _totalCoinsEverCollected = PlayerPrefs.GetInt("TotalCoins", 0);

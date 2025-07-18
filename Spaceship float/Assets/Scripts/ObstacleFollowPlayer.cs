@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// This script is targetted to the obstacles. where obstacles move directly towards the player to destroy the player object
-/// </summary>
+ // script for obstacles to move directly towards the player to destroy the player object
 
 public class ObstacleFollowPlayer : MonoBehaviour
 {
@@ -27,7 +25,6 @@ public class ObstacleFollowPlayer : MonoBehaviour
     void Update()
     {
     }
-
 
     void FixedUpdate()
     {

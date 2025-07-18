@@ -1,71 +1,76 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using MatthewAssets;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+
 public class PlayerControllerX : MonoBehaviour
 {
-    public float speed = 10f; // Forward movement speed
-    public float rotationSpeed = 5f; // Speed of tilting
-    public float maxTiltAngle = 45f; // Maximum tilt angle in degrees
-    private bool isHolding = false; // Check if the button is being held
-    public GameObject explosionEffect;
-    public ParticleSystem engineFlame;  //Flame to come out at the rear of the space ship
+    // Movement and rotation settings
+    public float speed = 10f;          // Forward movement speed
+    public float rotationSpeed = 5f;   // Tilt rotation speed
+    public float maxTiltAngle = 45f;   // Maximum tilt angle
+    
+    // Input and effects
+    private bool isHolding = false;    // Track if input is being held
+    public GameObject explosionEffect; // Death explosion prefab
+    public ParticleSystem engineFlame; // Engine visual effect
 
     void FixedUpdate()
     {
-        // Move the plane forward at a constant rate
+        // Constant forward movement
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
     void Update()
     {
+        // Handle mouse/touch input
+        if (Input.GetMouseButtonDown(0)) isHolding = true;
+        if (Input.GetMouseButtonUp(0)) isHolding = false;
 
-
-        // Check for mouse button or touch input
-        if (Input.GetMouseButtonDown(0)) // 0 is the left mouse button or a single touch
-        {
-            isHolding = true;
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            isHolding = false;
-        }
-
-        // Get the current rotation in Euler angles
+        // Get current rotation and normalize angle
         Vector3 currentRotation = transform.rotation.eulerAngles;
+        if (currentRotation.x > 180) currentRotation.x -= 360;
 
-        // Convert current rotation to a -180 to 180 range for easier calculations
-        if (currentRotation.x > 180)
-        {
-            currentRotation.x -= 360;
-        }
-
-        // Calculate the target tilt angle based on input
-        float targetRotationX = 0f; // Default target angle (no tilt)
+        // Calculate target tilt based on input
+        float targetRotationX = 0f;
         if (isHolding)
         {
-            // Tilt upward
+            // Tilt up when holding input
             targetRotationX = Mathf.Clamp(currentRotation.x - rotationSpeed * Time.deltaTime, -maxTiltAngle, maxTiltAngle);
         }
         else
         {
-            // Tilt downward
+            // Tilt down when not holding
             targetRotationX = Mathf.Clamp(currentRotation.x + rotationSpeed * Time.deltaTime, -maxTiltAngle, maxTiltAngle);
         }
 
-        // Apply the new rotation while keeping the Y and Z rotations unchanged
+        // Apply new rotation
         transform.rotation = Quaternion.Euler(targetRotationX, currentRotation.y, currentRotation.z);
     }
 
- void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
+        // Check for asteroid collision
         if (other.CompareTag("Asteroid"))
         {
-            if (explosionEffect != null) 
+            // Stop game systems
+            FindObjectOfType<coinSpawner>()?.StopSpawning();
+            FindObjectOfType<GameManager>()?.StopGame();
+            FindObjectOfType<scoreUI>()?.SaveTotalCoins();
+
+            // Show explosion effect
+            if (explosionEffect != null)
                 Instantiate(explosionEffect, transform.position, Quaternion.identity);
-            
+
+            // Destroy player and reload scene
             Destroy(gameObject);
-            Debug.Log("Player destroyed!");
+            SceneManager.LoadScene(0);
         }
+    }
+
+    void OnDestroy()
+    {
+        // Safety cleanup on destruction
+        FindObjectOfType<GameManager>()?.StopGame();
+        FindObjectOfType<coinSpawner>()?.StopSpawning();
+        isHolding = false; // Reset input state
     }
 }
