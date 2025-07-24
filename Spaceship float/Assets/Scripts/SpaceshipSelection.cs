@@ -47,7 +47,7 @@ public class SpaceshipSelection : MonoBehaviour
         shipCostText.text = ships[currentIndex].isUnlocked ? "UNLOCKED" : $"COST: {ships[currentIndex].unlockCost}";
         
         // Enable/disable select button based on unlock status
-        selectButton.interactable = ships[currentIndex].isUnlocked;
+        // selectButton.interactable = ships[currentIndex].isUnlocked;          //-----------UNCOMMENT THIS FOR THE SELECT BUTTON TO GO UN INTERACTABLE WHEN SHIP LOCKED
         
         // Update 3D model preview (if using)
         if (currentShipModel != null) Destroy(currentShipModel);
@@ -73,16 +73,16 @@ public class SpaceshipSelection : MonoBehaviour
         Debug.Log($"Selected ship: {ships[currentIndex].shipName}");
         
         // Load game scene
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("Main");
     }
 
     // Call this when unlock system is implemented
-    public void UnlockCurrentShip()
-    {
-        if (CurrencyManager.Instance.SpendCoins(ships[currentIndex].unlockCost))
-        {
-            ships[currentIndex].isUnlocked = true;
-            UpdateShipDisplay();
-        }
-    }
+    // public void UnlockCurrentShip()
+    // {
+    //     if (CurrencyManager.Instance.SpendCoins(ships[currentIndex].unlockCost))
+    //     {
+    //         ships[currentIndex].isUnlocked = true;
+    //         UpdateShipDisplay();
+    //     }
+    // }
 }

@@ -3,46 +3,77 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    // Assign in Inspector
-    public GameObject mainPanel;    // Main menu with Start button
-    public GameObject mapsPanel;    // Map selection UI
-    public GameObject shipsPanel;   // Ship selection UI
+    // UI Panels (assign in Inspector)
+    public GameObject mainPanel;    // Main menu
+    public GameObject mapsPanel;    // Map selection
+    public GameObject shipsPanel;   // Ship selection
 
-    private int selectedMapIndex;   // Track chosen map
+    // Selection tracking
+    private int selectedMapIndex = 0;
+    private bool cameFromStartFlow = false;
 
     void Start()
     {
-        // Start with main menu visible
         ReturnToMainMenu();
     }
 
-    // ====== MAIN MENU FLOW ======
+    // ====== MAIN MENU BUTTONS ======
     public void OnStartClicked()
     {
-        // Hide main menu, show map selection
+        cameFromStartFlow = true;
         mainPanel.SetActive(false);
         mapsPanel.SetActive(true);
+    }
+
+    public void OnMapsClicked()
+    {
+        cameFromStartFlow = false;
+        mainPanel.SetActive(false);
+        mapsPanel.SetActive(true);
+    }
+
+    public void OnShipsClicked()
+    {
+        cameFromStartFlow = false;
+        mainPanel.SetActive(false);
+        shipsPanel.SetActive(true);
     }
 
     // ====== MAP SELECTION ======
     public void SelectMap(int mapIndex)
     {
+        selectedMapIndex = mapIndex;
         PlayerPrefs.SetInt("SelectedMap", mapIndex);
-        StartGame();
+
+        if (cameFromStartFlow)
+        {
+            // Continue to ship selection
+            mapsPanel.SetActive(false);
+            shipsPanel.SetActive(true);
+        }
+        else
+        {
+            // Just browsing maps - return to main menu
+            ReturnToMainMenu();
+        }
     }
 
     // ====== SHIP SELECTION ======
-    public void ShowShipSelection()
-    {
-        mainPanel.SetActive(false);
-        mapsPanel.SetActive(false);
-        shipsPanel.SetActive(true);
-    }
-
     public void SelectShip(int shipIndex)
     {
         PlayerPrefs.SetInt("SelectedShip", shipIndex);
-        StartGame(); // Load game after both selections
+        
+        if (cameFromStartFlow)
+        {
+            // Start game immediately with selected map
+            StartGame();
+        }
+        else
+        {
+            // Just browsing ships - start with default map
+            selectedMapIndex = 0; // Or PlayerPrefs.GetInt("SelectedMap", 0);
+            StartGame();
+        }
     }
 
     // ====== NAVIGATION ======

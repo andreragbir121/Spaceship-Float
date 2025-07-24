@@ -1,67 +1,30 @@
 ﻿using UnityEngine;
-using System.Collections;   
+
 public class FollowPlayerX : MonoBehaviour
 {
-    // ========== CONFIGURATION ==========
-    public GameObject plane;
-    
-    public Vector3 offset = new Vector3(5, 1, 42);
+    [SerializeField] private Vector3 offset = new Vector3(5, 1, 42);
+    private Transform _target;
 
-    private Transform _planeTransform;  // Cached transform for efficiency
-    private bool _isValid = true;      // Safety flag for target validity
-
-    void Start()
+    void LateUpdate()
     {
-        // Null check for required reference
-        if (plane == null)
+        if (_target == null)
         {
-            Debug.LogError("Plane reference not set in FollowPlayerX!", this);
-            _isValid = false;
-            return;
+            // Auto-find player if target is missing
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player != null) _target = player.transform;
+            else return;
         }
-
-        // Cache transform for performance
-        _planeTransform = plane.transform;
-    }
-
-    // ========== MAIN UPDATE LOOP ==========
-    void Update()
-    {
-        // Early exit if target is invalid/missing
-        if (!_isValid || _planeTransform == null)
-        {
-            /* Potential extension:
-            if (autoRecover) {
-                TryFindNewTarget();
-            }*/
-            return;
-        }
-
-        // Maintain consistent offset from target
-        transform.position = _planeTransform.position + offset;
-    }
-
-    // Call this when target is being destroyed to prevent errors
-  
-    public void OnTargetDestroyed()
-    {
-        _isValid = false;
-        _planeTransform = null;
         
-        /* Optional extensions:
-        - Switch to alternate target
-        - Enable cinematic camera mode
-        - Trigger game over sequence */
+        transform.position = _target.position + offset;
     }
 
-    /* Optional recovery method
-    private void TryFindNewTarget()
+    // Call this when a new player spawns
+    public void SetNewTarget(GameObject newTarget)
     {
-        GameObject newTarget = GameObject.FindGameObjectWithTag("Player");
-        if (newTarget != null) {
-            plane = newTarget;
-            _planeTransform = newTarget.transform;
-            _isValid = true;
+        if (newTarget != null)
+        {
+            _target = newTarget.transform;
+            Debug.Log($"Camera now following: {newTarget.name}");
         }
-    }*/
+    }
 }
